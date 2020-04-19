@@ -6,7 +6,7 @@ import java.sql.*;
 import java.sql.Date;
 import java.util.*;
 
-/*
+/*gamestudio
     CREATE TABLE score (
         player VARCHAR(64) NOT NULL,
         game VARCHAR(64) NOT NULL,

@@ -1,16 +1,35 @@
 package sk.tuke.gamestudio.game.reversi.consoleui;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.reversi.core.Field;
 import sk.tuke.gamestudio.game.reversi.core.GameState;
 import sk.tuke.gamestudio.game.reversi.core.Tile;
+import sk.tuke.gamestudio.service.CommentService;
+import sk.tuke.gamestudio.service.RatingService;
+import sk.tuke.gamestudio.service.ScoreService;
 
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class ConsoleUI {
+    private static final String GAME_NAME = "Reversi";
     private static final Pattern INPUT_PATTERN = Pattern.compile("([P])([A-H])([1-8])");
     private Field field;
+
+    @Autowired
+    private ScoreService scoreService;
+
+   /* @Autowired
+    private CommentService commentService;
+
+    @Autowired
+    private RatingService ratingService;*/
+
 
     public ConsoleUI(Field field) {
         this.field = field;
@@ -18,17 +37,20 @@ public class ConsoleUI {
 
 
     public void play() {
+        //printScores();
         do {
             show();
             handleInput();
-        } while(field.getState() == GameState.PLAYING);
+        } while (field.getState() == GameState.PLAYING);
         show();
-        if (field.getState() == GameState.WIN_BLACK ) {
+        if (field.getState() == GameState.WIN_BLACK) {
             System.out.println("BLACK WON!!!");
+              //      scoreService.addScore(
+                //            new Score(System.getProperty("user.name"), field.getBlackDisksCount(), GAME_NAME, new Date());
+            //);
         } else
             System.out.println("WHITE WON!!!");
     }
-
 
 
     private void show() {
@@ -39,11 +61,12 @@ public class ConsoleUI {
         printActualScore();
     }
 
-    private void printActualScore(){
+    private void printActualScore() {
         System.out.print("Score: ");
-        System.out.print("black player: "+ field.getBlackDisksCount());
-        System.out.println("  white player: "+field.getWhiteDisksCount());
+        System.out.print("black player: " + field.getBlackDisksCount());
+        System.out.println("  white player: " + field.getWhiteDisksCount());
     }
+
     private void printFieldHeader() {
         System.out.println(field.getPlayerState());
         System.out.print(' ');
@@ -56,11 +79,11 @@ public class ConsoleUI {
 
     private void printFieldBody() {
         for (int row = 0; row < field.getRowCount(); row++) {
-            System.out.print((char)('A' + row));
+            System.out.print((char) ('A' + row));
             System.out.print(" ");
             for (int column = 0; column < field.getColumnCount(); column++) {
                 System.out.print(" ");
-                printTile(row,column);
+                printTile(row, column);
             }
             System.out.println();
         }
@@ -87,15 +110,15 @@ public class ConsoleUI {
         }
     }
 
-    public void handleInput(){
-        while (true){
+    public void handleInput() {
+        while (true) {
             System.out.println("Enter input (eg. PA3, PB4, X(exit) ... positions where you want put disk");
             String input = new Scanner(System.in).nextLine().trim().toUpperCase();
 
-            if("X".equals(input))
+            if ("X".equals(input))
                 System.exit(0);
 
-            if("R".equals(input))
+            if ("R".equals(input))
                 play();
 
             Matcher matcher = INPUT_PATTERN.matcher(input);
@@ -105,7 +128,7 @@ public class ConsoleUI {
                     int column = Integer.parseInt(matcher.group(3)) - 1;
                     if (row >= 0 && row < field.getRowCount() && column >= 0 && column < field.getColumnCount()) {
                         if ("P".equals(matcher.group(1))) {
-                            field.putDisk(row,column);
+                            field.putDisk(row, column);
                             return;
                         }
                     }
@@ -116,4 +139,12 @@ public class ConsoleUI {
         }
     }
 
+   /* private void printScores() {
+        List<Score> scores = scoreService.getBestScores(GAME_NAME);
+        Collections.sort(scores);
+        System.out.println("Top scores:");
+        for (Score s : scores) {
+
+        }
+    }*/
 }
