@@ -35,3 +35,5 @@ public class RatingServiceJPA implements RatingService {
         return current.getRating();
     }
 }
+
+
