@@ -1,8 +1,14 @@
 package sk.tuke.gamestudio.entity;
 
+import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 import java.util.Date;
+
+@Entity
+@NamedQuery( name = "Comment.getComments",
+        query = "SELECT c FROM Comment c WHERE c.game=:game order by c.commentedOn desc ")
 
 public class Comment {
     @Id

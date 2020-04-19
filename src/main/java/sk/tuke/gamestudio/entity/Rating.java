@@ -1,14 +1,18 @@
 package sk.tuke.gamestudio.entity;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.NamedQuery;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@NamedQuery( name = "Rating.getReating",
-        query = "SELECT r FROM Rating r WHERE r.game=:game ORDER BY r.points DESC")
+@NamedQueries({
+        @NamedQuery(name="Rating.getAverageRating",
+                query = "SELECT round(avg(r.rating)) as gamerating from Rating r where r.game=:game"),
+        @NamedQuery(name="Rating.getRating",
+                query="SELECT r FROM Rating r WHERE r.game=:game AND r.player=:player"),
+        @NamedQuery(name="Rating.getCount",
+                query="SELECT Count(r) FROM Rating r WHERE r.game=:game AND r.player=:player"),
+})
+
 
 public class Rating {
     @Id
