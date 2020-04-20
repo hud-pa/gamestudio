@@ -42,9 +42,19 @@ public class SpringClient {
     public ScoreService scoreService() {
         //return new ScoreServiceJDBC();
         //return new ScoreServiceFile();
-        return new ScoreServiceJPA();
-        //return new ScoreServiceRestClient();
+        //return new ScoreServiceJPA();
+        return new ScoreServiceRestClient();
     }
+
+    @Bean
+    public CommentService commentService() {
+        return new CommentServiceRestClient();
+    }
+
+  /*  @Bean
+    public RatingService ratingService() {
+        return new RatingServiceRestClient();
+    }/*
 
     /*@Bean
     public GamePlayService gamePlayService() {

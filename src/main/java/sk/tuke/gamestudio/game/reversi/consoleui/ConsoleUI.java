@@ -139,12 +139,12 @@ public class ConsoleUI {
         }
     }
 
-   /* private void printScores() {
+    private void printScores() {
         List<Score> scores = scoreService.getBestScores(GAME_NAME);
         Collections.sort(scores);
         System.out.println("Top scores:");
         for (Score s : scores) {
 
         }
-    }*/
+    }
 }
