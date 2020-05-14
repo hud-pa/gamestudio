@@ -1,0 +1,28 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Reversi</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" href="/css/stylesheet.css"/>
+</head>
+<body>
+
+<h1>Welcome to <a href="/">Gamestudio</a>!</h1>
+<h1>Reversi</h1>
+
+<a href="/reversi/new">New game</a><br/>
+<a href="/mines/mark" th:text='${@minesController.marking ? "Mark" : "Open"}'/><br/>
+
+<div th:text="${@minesController.gameState}"/>
+<div th:utext="${@minesController.htmlField}"/>
+
+<h2>Scores</h2>
+<ol>
+    <li th:each="score : ${scores}">
+        <span th:text="${score.player}"/>
+        <span th:text="${score.points}"/>
+    </li>
+</ol>
+
+</body>
+</html>

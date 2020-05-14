@@ -7,7 +7,7 @@ import java.sql.*;
 public class RatingServiceJDBC implements RatingService {
     public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "palo";
+    public static final String PASSWORD = "heslo";
 
     public static final String INSERT_RATING =
             "INSERT INTO rating (game, player, rating, ratedon) VALUES (?, ?, ?, ?)";

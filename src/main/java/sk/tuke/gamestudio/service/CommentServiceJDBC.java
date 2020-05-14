@@ -10,7 +10,7 @@ public class CommentServiceJDBC implements CommentService {
 
     public static final String URL = "jdbc:postgresql://localhost:5432/postgres";
     public static final String USER = "postgres";
-    public static final String PASSWORD = "palo";
+    public static final String PASSWORD = "heslo";
 
     public static final String INSERT_COMMENT =
             "INSERT INTO comment (game, player, comment, commentedon) VALUES (?, ?, ?, ?)";

@@ -51,12 +51,12 @@ public class SpringClient {
         return new CommentServiceRestClient();
     }
 
-  /*  @Bean
+   @Bean
     public RatingService ratingService() {
         return new RatingServiceRestClient();
-    }/*
+    }
 
-    /*@Bean
+   /* @Bean
     public GamePlayService gamePlayService() {
         return new GamePlayServiceJPA();
     }*/

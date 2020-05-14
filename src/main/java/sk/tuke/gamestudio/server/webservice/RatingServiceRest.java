@@ -16,11 +16,11 @@ public class RatingServiceRest {
     public int getAverageRating(@PathVariable String game) throws RatingException {
         return ratingService.getAverageRating(game);
     }
-
-    @GetMapping("/{game}")
+// nesol servr a uz ide
+   /* @GetMapping("/{game}")
     public int getRating(@PathVariable String game, String player) throws RatingException {
         return ratingService.getRating(game,player);
-    }
+    }*/
 
     @PostMapping
     public void setRating(@RequestBody Rating rating) throws RatingException {
