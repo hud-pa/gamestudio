@@ -12,6 +12,7 @@ import org.springframework.web.context.WebApplicationContext;
 public class UserController {
     private String loggedUser;
 
+
     @RequestMapping("/")
     public String index() {
         return "index";

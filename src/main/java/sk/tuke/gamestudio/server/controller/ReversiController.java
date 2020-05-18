@@ -6,11 +6,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.WebApplicationContext;
+import sk.tuke.gamestudio.entity.Score;
 import sk.tuke.gamestudio.game.reversi.core.Field;
 import sk.tuke.gamestudio.game.reversi.core.GameState;
 import sk.tuke.gamestudio.game.reversi.core.PlayerState;
 import sk.tuke.gamestudio.game.reversi.core.Tile;
 import sk.tuke.gamestudio.service.ScoreService;
+
+import java.util.Date;
 
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
@@ -26,6 +29,27 @@ public class ReversiController {
 
         private Field field;
         private boolean firstTime = true;
+        private String message;
+
+        public String getMessage() {
+        return message;
+    }
+
+        private String scoreBlack;
+        public String getScoreBlack() {
+        return scoreBlack;
+    }
+        public void setScoreBlack(String scoreBlack) {
+        this.scoreBlack = scoreBlack;
+    }
+
+         private String scoreWhite;
+         public String getScoreWhite() {
+        return scoreWhite;
+    }
+        public void setScoreWhite(String scoreWhite) {
+        this.scoreWhite= scoreWhite;
+    }
 
 
 
@@ -35,32 +59,33 @@ public class ReversiController {
             if (field == null)
                 newGame();
             try {
-
                 if(firstTime){
                     field.setPlayerState(PlayerState.PLAYING_BLACK);
                     //field.markFields();
                     firstTime = false;
-
                 }else
-
-
-
                 if (field.getState() == GameState.PLAYING) {
-
                     //field.markFields();
                     if(column !=null && row != null)
                     field.putDisk(Integer.parseInt(row), Integer.parseInt(column));
                     field.changePlayer();
                     field.markFields();
-
-                   /* if (userController.isLogged() && field.getState() == GameState.WIN_BLACK) {
+                    scoreBlack = "Score of BLACK player is : " + field.getBlackDisksCount();//////////////
+                    scoreWhite = "Score of WHITE player is : "+ field.getWhiteDisksCount();
+                    if (userController.isLogged()) {
+                        if(field.getState() != GameState.PLAYING)
                         scoreService.addScore(new Score(
                                 (String)userController.getLoggedUser(),
-                                field.getWhiteDisksCount(),
+                                 winnerPoints(),
                                 "disks",
-                                new Date()
-                        ));
-                    }*/
+                                new Date(
+                        )));
+                    }
+
+                    if(field.getState() == GameState.WIN_BLACK)
+                        message = "Black player won ! Your score is : " + field.getBlackDisksCount();
+                    else if(field.getState() == GameState.WIN_WHITE)
+                        message = "White player won ! Your score is : " + field.getWhiteDisksCount();
                 }
 
             } catch (NumberFormatException e) {
@@ -79,27 +104,18 @@ public class ReversiController {
             return "reversi";
         }
 
-   /* @RequestMapping("/mark")
-    public String changeMark(Model model) {
-        marking = !marking;
-        prepareModel(model);
-        return "mines";
-    }
-
-    public boolean isMarking() {
-        return marking;
-    }*/
-
         public GameState getGameState() {
             return field.getState();
         }
 
-    public PlayerState getPlayerState() {
+        public PlayerState getPlayerState() {
         return field.getPlayerState();
     }
 
+    public int score(){
+            return field.getBlackDisksCount();
+    }
 
-        //Tento pristup sice nie je idealny, ale pre zaciatok je najjednoduchsi
         public String getHtmlField() {
             StringBuilder sb = new StringBuilder();
             sb.append("<table class='field'>\n");
@@ -124,6 +140,11 @@ public class ReversiController {
             return sb.toString();
         }
 
+        public int winnerPoints(){
+            if(getGameState() == GameState.WIN_BLACK) return field.getBlackDisksCount();
+            else return field.getWhiteDisksCount();
+        }
+
         private String getImageName(Tile tile) {
             switch (tile.getState()) {
                 case EMPTY:
@@ -145,8 +166,6 @@ public class ReversiController {
         private void newGame() {
             field = new Field();
         }
-
-
 
     }
 

@@ -11,12 +11,21 @@
 <h1>Reversi</h1>
 
 <a href="/reversi/new">New game</a><br/>
-<!-- <a href="/mines/mark" th:text='${@minesController.marking ? "Mark" : "Open"}'/><br/> -->
 
 <div th:text="${@reversiController.gameState}"/>
 <div th:text="${@reversiController.playerState}"/>
 <div th:utext="${@reversiController.htmlField}"/>
-<div th:text="${@reversiController.playerState}"/>
+
+
+<p th:text="${@reversiController.scoreBlack}"></p> <p th:text="${@reversiController.scoreWhite}"></p>
+
+<span th:text="${@reversiController.message}"
+      class="label label-success"></span>
+
+
+
+
+
 
 
 
@@ -29,6 +38,8 @@
     </li>
 </ol>
 
+
+<a href="/comment"> Services</a>
 
 </body>
 </html>

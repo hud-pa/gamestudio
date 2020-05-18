@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+<h1>Coments</h1>
+
+<form action="/action_page.php" id="player">
+    Name: <input type="text" name="player">
+    <input type="submit">
+
+</form>
+<br>
+<textarea rows="4" cols="50" name="comment" form="player">
+Enter text here...</textarea>
+
+
+<table>
+    <thead>
+    <tr>
+        <th> Player </th>
+        <th> Comment </th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:if="${comments.empty}">
+        <td colspan="2"> No Comments Available </td>
+    </tr>
+    <tr th:each="comment : ${comments}">
+        <td><span th:text="${comment.player}"> Player </span></td>
+        <td><span th:text="${comment.comment}"> Comment </span></td>
+    </tr>
+    </tbody>
+</table>
+
+<div class="third">
+    <p class="tablelabel">Comments</p>
+
+    <div class="commentWindow">
+        <div th:each="comment: ${comments}">
+
+            <div class="uniqueComment">
+                <div class="commentInfo">
+                    <p class="authorP" th:text="${comment.player}"></p>
+                    <p class="datep timeComment" th:text="${comment.commentedOn}"></p>
+                </div>
+                <p class="commentSpan" th:text="${comment.comment}"></p>
+
+
+            </div>
+            <hr class="underComment"/>
+        </div>
+
+
+<!-----------------------------------------------------------------*> -->
+
+
+        <div class="third">
+            <p class="tablelabel">Comments</p>
+
+            <div class="commentWindow">
+                <div th:each="comment: ${comments}">
+
+                    <div class="uniqueComment">
+                        <div class="commentInfo">
+                            <p class="authorP" th:text="${comment.player}"></p>
+                            <p class="datep timeComment" th:text="${comment.commentedOn}"></p>
+                        </div>
+                        <p class="commentSpan" th:text="${comment.comment}"></p>
+
+
+                    </div>
+                    <hr class="underComment"/>
+                </div>
+
+            </div>
+
+
+                <div class="wrapper">
+                    <button type="button" id="postcommentbutton" onclick="document.getElementById('id01').style.display='block'">Post Comment</button>
+                </div>
+
+
+
+
+                <p class="loginlabel">PLEASE LOG IN TO Comment</p>
+
+        </div>
+
+        <!-- The Modal -->
+        <div id="id01" class="modal">
+  <span id="closeModal" onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+            <!-- Modal Content -->
+            <form id="commentForm" class="modal-content animate commentLabel" method="get" th:action="@{/comment}">  <!-- mozno bez reversi -->
+
+                <div class="container">
+
+
+                        <label style="display: none" for="commentAuthor"><b>Author:</b></label>
+                        <input id="commentAuthor" type="text" placeholder="Enter Author" name="player" />
+
+
+
+                    <label for="commenttext" ><b >Text komentára:</b></label>
+                    <textarea spellcheck="true" placeholder="Text komentára vložte tu..." name="comment" id="commenttext"  cols="70" rows="9" required></textarea>
+                    <button id="submitBtn" class="marginBottomForm" type="submit">Post comment</button> <br>
+
+                </div>
+
+                <div class="container" style="background-color:#f1f1f1">
+                    <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" id="cnclBtn">Cancel</button>
+
+                </div>
+            </form>
+        </div>
+
+    </div>
+    <script>
+        // Get the modal
+        var modal = document.getElementById('id01');
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+
+        setTime();
+
+        function setTime() {
+            var times =  document.getElementsByClassName("time");
+
+            for(var i=0, length =times.length;i<length;i++){
+                console.log(times.item(i));
+                var parts = times.item(i).innerHTML.split(' ');
+                //  console.log(parts[0]);
+                times.item(i).innerHTML=parts[0];
+
+            }
+
+            var times =  document.getElementsByClassName("timeComment");
+            for(var i=0, length =times.length;i<length;i++){
+                //  console.log(times.item(i));
+                var parts = times.item(i).innerHTML.split(':');
+                //  console.log(parts[0]);
+                times.item(i).innerHTML=parts[0]+":"+parts[1];
+
+            }
+        }
+    </script>
+
+
+
+</div>
+
+</body>
+</html>

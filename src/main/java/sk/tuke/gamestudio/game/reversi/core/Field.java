@@ -490,4 +490,5 @@ public class Field {
     public void setPlayerState(PlayerState state){
         playerState = state;
     }
+
 }

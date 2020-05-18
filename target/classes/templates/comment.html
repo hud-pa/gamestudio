@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" class="comment">
+<head>
+    <title>LEVEL SELECT</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="../static/css/MyCss.css.css" th:href="@{/css/MyCss.css}"/>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" type="text/css"
+          href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
+
+    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
+
+</head>
+<body>
+
+<div class="first">
+    <p class="tablelabel">Hall of Fame</p>
+    <table class="info tableOne">
+        <thead>
+        <tr>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Played on</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="score: ${scores}">
+            <td th:text="${score.player}"></td>
+            <td th:text="${score.points}"></td>
+            <td class="time" th:text="${score.playedOn}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+<!--<div th:if="${not @userController.logged}">-->
+
+        <div class="size">
+            <span class="loggedinfo">My rating:</span>
+            <th:block th:switch="${myRating}">
+                <div th:case="'1'">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <div th:case="'2'">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <div th:case="'3'">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star"></span>
+                    <span class="fa fa-star"></span>
+                </div>
+                <div th:case="'4'">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star "></span>
+                </div>
+                <div th:case="'5'">
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                </div>
+                <div th:case="*">
+                    <span class="loggedinfo">No ratings yet</span>
+                </div>
+            </th:block>
+        </div>
+
+
+
+        <form method="get" class="ratingFormMArgin"  th:action="@{/comment}">
+    <span class="star-rating">
+  <input type="radio" name="rating" value="1"><i></i>
+  <input type="radio" name="rating" value="2"><i></i>
+  <input type="radio" name="rating" value="3"><i></i>
+  <input type="radio" name="rating" value="4"><i></i>
+  <input type="radio" name="rating" value="5"><i></i>
+</span>
+            <button id="submitRtng" class="marginBottomForm rateBtn" type="submit">Rate Game</button> <br>
+        </form>
+   <!-- </div> -->
+</div>
+
+
+<div class="third">
+    <p class="tablelabel">Comments</p>
+
+    <div class="commentWindow">
+        <div th:each="comment: ${comments}">
+
+            <div class="uniqueComment">
+                <div class="commentInfo">
+                    <p class="authorP" th:text="${comment.player}"></p>
+                    <p class="datep timeComment" th:text="${comment.commentedOn}"></p>
+                </div>
+                <p class="commentSpan" th:text="${comment.comment}"></p>
+
+
+            </div>
+            <hr class="underComment"/>
+        </div>
+
+    </div>
+
+    <div th:if="${not @userController.logged}">
+        <div class="wrapper">
+            <button type="button" id="postcommentbutton" onclick="document.getElementById('id01').style.display='block'">Post Comment</button>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- The Modal -->
+<div id="id01" class="modal">
+  <span id="closeModal" onclick="document.getElementById('id01').style.display='none'"
+        class="close" title="Close Modal">&times;</span>
+
+    <!-- Modal Content -->
+    <form id="commentForm" class="modal-content animate commentLabel" method="get" th:action="@{/comment}">
+
+        <div class="container">
+
+            <div th:if="${not @userController.logged}">
+                <label style="display: none" for="commentAuthor"><b>Author:</b></label>
+
+            </div>
+
+            <label for="commenttext" ><b >Text komentára:</b></label>
+            <textarea spellcheck="true" placeholder="Text komentára vložte tu..." name="comment" id="commenttext"  cols="70" rows="9" required></textarea>
+            <button id="submitBtn" class="marginBottomForm" type="submit">Post comment</button> <br>
+
+        </div>
+
+        <div class="container" style="background-color:#f1f1f1">
+            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" id="cnclBtn">Cancel</button>
+
+        </div>
+    </form>
+</div>
+
+</div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById('id01');
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<script>
+
+    setTime();
+
+    function setTime() {
+        var times =  document.getElementsByClassName("time");
+
+        for(var i=0, length =times.length;i<length;i++){
+            console.log(times.item(i));
+            var parts = times.item(i).innerHTML.split(' ');
+            //  console.log(parts[0]);
+            times.item(i).innerHTML=parts[0];
+
+        }
+
+        var times =  document.getElementsByClassName("timeComment");
+        for(var i=0, length =times.length;i<length;i++){
+            //  console.log(times.item(i));
+            var parts = times.item(i).innerHTML.split(':');
+            //  console.log(parts[0]);
+            times.item(i).innerHTML=parts[0]+":"+parts[1];
+
+        }
+    }
+</script>
+</body>
+</html>
