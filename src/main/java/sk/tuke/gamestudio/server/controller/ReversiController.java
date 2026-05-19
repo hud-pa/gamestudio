@@ -20,6 +20,8 @@ import java.util.Date;
 @RequestMapping("/reversi")
 public class ReversiController {
 
+        private static final String GAME_NAME = "reversi";
+
         @Autowired
         private ScoreService scoreService;
         //+++
@@ -29,6 +31,7 @@ public class ReversiController {
 
         private Field field;
         private boolean firstTime = true;
+        private boolean scoreSaved = false;
         private String message;
 
         public String getMessage() {
@@ -72,14 +75,19 @@ public class ReversiController {
                     field.markFields();
                     scoreBlack = "Score of BLACK player is : " + field.getBlackDisksCount();//////////////
                     scoreWhite = "Score of WHITE player is : "+ field.getWhiteDisksCount();
-                    if (userController.isLogged()) {
-                        if(field.getState() != GameState.PLAYING)
+
+                    if(field.getState() != GameState.PLAYING && !scoreSaved) {
+                        String player = userController.isLogged()
+                                ? userController.getLoggedUser()
+                                : "anonymous";
+
                         scoreService.addScore(new Score(
-                                (String)userController.getLoggedUser(),
-                                 winnerPoints(),
-                                "disks",
-                                new Date(
-                        )));
+                                GAME_NAME,
+                                player,
+                                winnerPoints(),
+                                new Date()
+                        ));
+                        scoreSaved = true;
                     }
 
                     if(field.getState() == GameState.WIN_BLACK)
@@ -160,11 +168,15 @@ public class ReversiController {
         }
 
         private void prepareModel(Model model) {
-            model.addAttribute("scores", scoreService.getBestScores("reversi"));
+            model.addAttribute("scores", scoreService.getBestScores(GAME_NAME));
         }
 
         private void newGame() {
             field = new Field();
+            scoreSaved = false;
+            message = null;
+            scoreBlack = null;
+            scoreWhite = null;
         }
 
     }

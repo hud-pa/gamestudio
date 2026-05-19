@@ -11,7 +11,7 @@ import javax.persistence.NamedQuery;
 @NamedQuery( name = "Score.getBestScores",
         query = "SELECT s FROM Score s WHERE s.game=:game ORDER BY s.points DESC")
 
-public class Score implements Comparable<Score>, Serializable {
+public class  Score implements Comparable<Score>, Serializable {
     @Id
     @GeneratedValue
     private int ident; //identifikator
@@ -34,7 +34,11 @@ public class Score implements Comparable<Score>, Serializable {
         this.playedOn = playedOn;
     }
 
-    public Score(String loggedUser, int winnerPoints, String disks, Date playedOn) {
+    public Score(String player, int points, String game, Date playedOn) {
+        this.player = player;
+        this.points = points;
+        this.game = game;
+        this.playedOn = playedOn;
     }
 
     public String getGame() {

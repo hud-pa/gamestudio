@@ -19,7 +19,7 @@ public class GameStudioServer {
     public ScoreService scoreService() {
        return new ScoreServiceJPA();
     }
-    @Bean(name="commentServiceServer")
+   @Bean(name="commentServiceServer")
     public CommentService commentService() {return new CommentServiceJPA();}
 
     @Bean(name="ratingServiceServer")

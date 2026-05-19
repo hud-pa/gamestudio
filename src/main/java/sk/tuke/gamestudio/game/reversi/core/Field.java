@@ -23,7 +23,6 @@ public class Field {
         whiteDisksCount = 2;
         blackDisksCount = 2;
         createField();
-
         myDisk = TitleState.WHITE_DISK;
         opponentDisk = TitleState.BLACK_DISK;
         myScore = whiteDisksCount;
