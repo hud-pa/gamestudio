@@ -14,32 +14,28 @@ import sk.tuke.gamestudio.service.RatingService;
 @Controller
 @Scope(WebApplicationContext.SCOPE_SESSION)
 public class RatingController {
+    private static final String GAME_NAME = "reversi";
+
     @Autowired
     private UserController userController;
+
     @Autowired
     private RatingService ratingService;
-    private String gameName;
 
     @RequestMapping("/rating")
-    public String rateGame(@RequestParam(value = "rating", required = false)
-                                    String rating, Model model) throws RatingException {
-        int rated;
-        gameName = "reversi";
+    public String rateGame(@RequestParam(value = "rating", required = false) String rating,
+                           Model model) throws RatingException {
+        String player = userController.isLogged() ? userController.getLoggedUser() : "anonymous";
 
-        if(rating!=null) {
-            rated = Integer.parseInt(rating);
-            Rating ratincek = new Rating(userController.getLoggedUser(),gameName,rated,new java.util.Date());
-            ratingService.setRating(ratincek);
+        if (rating != null && !rating.trim().isEmpty()) {
+            int rated = Integer.parseInt(rating);
+            Rating savedRating = new Rating(player, GAME_NAME, rated, new java.util.Date());
+            ratingService.setRating(savedRating);
         }
 
-        //int ratingg = ratingService.getAverageRating("GuessWhatsInPicture");
-        int myRating = ratingService.getRating("GuessWhatsInPicture",userController.getLoggedUser());
+        int myRating = ratingService.getRating(GAME_NAME, player);
         model.addAttribute("myRating", myRating);
-        //model.addAttribute("rating", ratingg);
-
 
         return "rating";
     }
-
-
 }

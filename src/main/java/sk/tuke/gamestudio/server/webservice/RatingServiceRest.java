@@ -22,7 +22,7 @@ public class RatingServiceRest {
         return ratingService.getRating(game,player);
     }*/
 
-    @PostMapping
+   @PostMapping
     public void setRating(@RequestBody Rating rating) throws RatingException {
         ratingService.setRating(rating);
     }

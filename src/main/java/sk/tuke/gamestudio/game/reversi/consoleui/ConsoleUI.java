@@ -24,11 +24,11 @@ public class ConsoleUI {
     @Autowired
     private ScoreService scoreService;
 
-   /* @Autowired
+    @Autowired
     private CommentService commentService;
 
     @Autowired
-    private RatingService ratingService;*/
+    private RatingService ratingService;
 
 
     public ConsoleUI(Field field) {
