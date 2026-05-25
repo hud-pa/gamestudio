@@ -1,0 +1,560 @@
+:root {
+    --bg-main: #0f172a;
+    --bg-dark: #020617;
+    --bg-card: rgba(15, 23, 42, 0.88);
+    --bg-card-light: rgba(30, 41, 59, 0.92);
+
+    --primary: #22c55e;
+    --primary-dark: #16a34a;
+    --primary-soft: rgba(34, 197, 94, 0.18);
+
+    --text-main: #f8fafc;
+    --text-muted: #94a3b8;
+
+    --border: rgba(255, 255, 255, 0.1);
+    --shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+
+    --black-disk: #020617;
+    --white-disk: #f8fafc;
+    --board-green: #166534;
+    --board-green-hover: #15803d;
+}
+
+/* =========================
+   Global page reset
+   ========================= */
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+}
+
+body.reversi-page {
+    margin: 0;
+    min-height: 100vh;
+    font-family: Arial, Helvetica, sans-serif;
+    background:
+            radial-gradient(circle at top left, rgba(34, 197, 94, 0.24), transparent 32rem),
+            radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.16), transparent 30rem),
+            linear-gradient(135deg, var(--bg-dark), var(--bg-main));
+    color: var(--text-main);
+}
+
+/* =========================
+   Top navigation
+   ========================= */
+
+.top-bar {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding: 24px 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 24px;
+}
+
+.brand {
+    color: var(--text-main);
+    font-size: 1.4rem;
+    font-weight: 800;
+    letter-spacing: 0.02em;
+    text-decoration: none;
+}
+
+.brand:hover {
+    color: var(--primary);
+}
+
+.navigation {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
+
+.navigation a {
+    color: var(--text-main);
+    text-decoration: none;
+    padding: 10px 16px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.04);
+    transition: 0.2s ease;
+}
+
+.navigation a:hover {
+    background: var(--primary-soft);
+    border-color: rgba(34, 197, 94, 0.55);
+    color: var(--text-main);
+}
+
+/* =========================
+   Main layout
+   ========================= */
+
+.game-layout {
+    width: min(1180px, calc(100% - 32px));
+    margin: 0 auto;
+    padding-bottom: 48px;
+}
+
+/* =========================
+   Hero
+   ========================= */
+
+.hero-card {
+    min-height: 260px;
+    padding: 40px;
+    border-radius: 32px;
+    background:
+            linear-gradient(135deg, rgba(34, 197, 94, 0.22), rgba(15, 23, 42, 0.92)),
+            var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    overflow: hidden;
+    position: relative;
+}
+
+.hero-card::after {
+    content: "";
+    position: absolute;
+    right: -80px;
+    bottom: -120px;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
+    background: rgba(34, 197, 94, 0.11);
+    border: 1px solid rgba(34, 197, 94, 0.18);
+}
+
+.hero-card > * {
+    position: relative;
+    z-index: 1;
+}
+
+.eyebrow {
+    margin: 0 0 8px;
+    color: var(--primary);
+    text-transform: uppercase;
+    letter-spacing: 0.16em;
+    font-size: 0.75rem;
+    font-weight: 800;
+}
+
+.hero-card h1 {
+    margin: 0;
+    font-size: clamp(3rem, 8vw, 6rem);
+    line-height: 0.95;
+    letter-spacing: -0.06em;
+}
+
+.hero-text {
+    max-width: 560px;
+    color: var(--text-muted);
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.primary-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 190px;
+    padding: 16px 22px;
+    border-radius: 18px;
+    background: var(--primary);
+    color: #052e16;
+    font-weight: 800;
+    text-decoration: none;
+    box-shadow: 0 16px 32px rgba(34, 197, 94, 0.25);
+    transition: 0.2s ease;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+    color: #052e16;
+    transform: translateY(-2px);
+}
+
+/* =========================
+   Game content
+   ========================= */
+
+.game-content {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: 340px 1fr;
+    gap: 28px;
+    align-items: start;
+}
+
+.status-panel {
+    display: grid;
+    gap: 20px;
+}
+
+.panel-card,
+.board-card,
+.scores-section {
+    padding: 24px;
+    border-radius: 28px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(14px);
+}
+
+.panel-card h2,
+.board-card h2,
+.scores-section h2 {
+    margin: 0 0 18px;
+    font-size: 1.35rem;
+    color: var(--text-main);
+}
+
+.status-line {
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.status-line:first-of-type {
+    border-top: 1px solid var(--border);
+}
+
+.status-line span {
+    color: var(--text-muted);
+}
+
+.status-line strong {
+    color: var(--primary);
+    text-align: right;
+}
+
+.message {
+    display: block;
+    margin-top: 18px;
+    color: var(--primary);
+    font-weight: 700;
+    line-height: 1.5;
+}
+
+/* =========================
+   Score cards
+   ========================= */
+
+.score-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+}
+
+.score-box {
+    padding: 18px;
+    border-radius: 20px;
+    background: var(--bg-card-light);
+    border: 1px solid var(--border);
+}
+
+.score-box span {
+    display: block;
+    color: var(--text-muted);
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+}
+
+.score-box strong {
+    display: block;
+    font-size: 2rem;
+    line-height: 1;
+}
+
+.black-score {
+    background:
+            linear-gradient(135deg, rgba(2, 6, 23, 0.95), rgba(30, 41, 59, 0.9));
+}
+
+.black-score strong {
+    color: #cbd5e1;
+}
+
+.white-score {
+    background:
+            linear-gradient(135deg, rgba(248, 250, 252, 0.16), rgba(30, 41, 59, 0.9));
+}
+
+.white-score strong {
+    color: #ffffff;
+}
+
+/* =========================
+   Board
+   ========================= */
+
+.board-header {
+    margin-bottom: 20px;
+}
+
+.board-header h2 {
+    margin-bottom: 8px;
+}
+
+.board-header p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.5;
+}
+
+.board-wrapper {
+    overflow-x: auto;
+    padding: 18px;
+    border-radius: 24px;
+    background:
+            linear-gradient(135deg, rgba(34, 197, 94, 0.12), rgba(255, 255, 255, 0.03));
+    border: 1px solid var(--border);
+}
+
+/*
+   Tieto štýly cielia na tabuľku, ktorú generuje controller cez htmlField.
+   Fungujú aj bez špeciálnych CSS tried v jednotlivých políčkach.
+*/
+
+.board-wrapper table {
+    margin: 0 auto;
+    border-collapse: separate;
+    border-spacing: 8px;
+}
+
+.board-wrapper th {
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.board-wrapper td,
+.board-wrapper th {
+    width: 54px;
+    height: 54px;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.board-wrapper td {
+    border-radius: 14px;
+    background: var(--board-green);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow:
+            inset 0 0 0 1px rgba(0, 0, 0, 0.24),
+            0 8px 16px rgba(0, 0, 0, 0.15);
+    transition: 0.15s ease;
+    font-size: 0;
+    position: relative;
+}
+
+.board-wrapper td:hover {
+    background: var(--board-green-hover);
+    transform: translateY(-1px);
+}
+
+/*
+   Ak sú v tabuľke odkazy na ťah, budú vyzerať ako klikateľné políčka.
+*/
+
+.board-wrapper a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 54px;
+    height: 54px;
+    color: var(--text-main);
+    font-weight: 800;
+    text-decoration: none;
+    font-size: 1rem;
+}
+
+/*
+   Základné vizuálne zvýraznenie obsahu bunky.
+   Ak controller vypisuje B, W, *, tieto znaky sa zobrazia krajšie.
+*/
+
+.board-wrapper td:has(a),
+.board-wrapper td:has(span) {
+    font-size: 1rem;
+}
+
+.board-wrapper td a {
+    border-radius: 14px;
+}
+
+.board-wrapper td a:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+/*
+   Fallback pre prípady, keď sú kamene len ako text.
+   Ideálne by bolo neskôr upraviť controller, aby generoval triedy:
+   black-disk, white-disk, marked-tile.
+*/
+
+.black-disk,
+.white-disk {
+    display: inline-flex;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    align-items: center;
+    justify-content: center;
+}
+
+.black-disk {
+    background:
+            radial-gradient(circle at 30% 25%, #475569, var(--black-disk) 58%);
+    box-shadow:
+            inset -4px -5px 10px rgba(0, 0, 0, 0.45),
+            0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.white-disk {
+    background:
+            radial-gradient(circle at 30% 25%, #ffffff, #cbd5e1 62%);
+    box-shadow:
+            inset -4px -5px 10px rgba(148, 163, 184, 0.55),
+            0 8px 16px rgba(0, 0, 0, 0.22);
+}
+
+.marked-tile {
+    display: inline-flex;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--primary);
+    box-shadow: 0 0 0 8px rgba(34, 197, 94, 0.16);
+}
+
+/* =========================
+   Leaderboard
+   ========================= */
+
+.scores-section {
+    margin-top: 28px;
+}
+
+.section-heading {
+    margin-bottom: 18px;
+}
+
+.score-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 12px;
+    counter-reset: score-counter;
+}
+
+.score-list li {
+    counter-increment: score-counter;
+    padding: 16px 18px;
+    border-radius: 18px;
+    background: var(--bg-card-light);
+    border: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+}
+
+.score-list li::before {
+    content: counter(score-counter) ".";
+    color: var(--primary);
+    font-weight: 900;
+    margin-right: 8px;
+}
+
+.score-list li span {
+    color: var(--text-main);
+    font-weight: 700;
+    flex: 1;
+}
+
+.score-list li strong {
+    color: var(--primary);
+    font-size: 1.1rem;
+}
+
+/* =========================
+   Responsive
+   ========================= */
+
+@media (max-width: 900px) {
+    .top-bar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .hero-card {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .game-content {
+        grid-template-columns: 1fr;
+    }
+
+    .navigation {
+        width: 100%;
+    }
+}
+
+@media (max-width: 560px) {
+    .game-layout,
+    .top-bar {
+        width: min(100% - 20px, 1180px);
+    }
+
+    .hero-card,
+    .panel-card,
+    .board-card,
+    .scores-section {
+        padding: 20px;
+        border-radius: 22px;
+    }
+
+    .hero-card h1 {
+        font-size: 3rem;
+    }
+
+    .score-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .board-wrapper {
+        padding: 12px;
+    }
+
+    .board-wrapper table {
+        border-spacing: 5px;
+    }
+
+    .board-wrapper td,
+    .board-wrapper th,
+    .board-wrapper a {
+        width: 42px;
+        height: 42px;
+    }
+
+    .black-disk,
+    .white-disk {
+        width: 30px;
+        height: 30px;
+    }
+}

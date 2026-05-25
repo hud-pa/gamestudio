@@ -1,37 +1,101 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="sk">
 <head>
     <title>Reversi</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-    <link rel="stylesheet" href="/css/stylesheet.css"/>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+    <link rel="stylesheet" href="/css/reversi.css"/>
 </head>
-<body>
+<body class="reversi-page">
 
-<h1>Welcome to <a href="/">Gamestudio</a>!</h1>
-<h1>Reversi</h1>
+<header class="top-bar">
+    <a href="/" class="brand">Gamestudio</a>
 
-<a href="/reversi/new">New game</a><br/>
+    <nav class="navigation">
+        <a href="/reversi/new">Nová hra</a>
+        <a href="/comment">Služby</a>
+    </nav>
+</header>
 
-<div th:text="${@reversiController.gameState}"/>
-<div th:text="${@reversiController.playerState}"/>
-<div th:utext="${@reversiController.htmlField}"/>
+<main class="game-layout">
 
+    <section class="hero-card">
+        <div>
+            <p class="eyebrow">Strategická hra</p>
+            <h1>Reversi</h1>
+            <p class="hero-text">
+                Ovládni hraciu plochu, obkľúč súperove kamene a získaj čo najvyššie skóre.
+            </p>
+        </div>
 
-<p th:text="${@reversiController.scoreBlack}"></p> <p th:text="${@reversiController.scoreWhite}"></p>
+        <a href="/reversi/new" class="primary-button">Spustiť novú hru</a>
+    </section>
 
-<span th:text="${@reversiController.message}"
-      class="label label-success"></span>
+    <section class="game-content">
 
-<h2>Scores</h2>
-<ol>
-    <li th:each="score : ${scores}">
-        <span th:text="${score.player}"/>
-        <span th:text="${score.points}"/>
-    </li>
-</ol>
+        <aside class="status-panel">
+            <div class="panel-card">
+                <h2>Stav hry</h2>
 
+                <div class="status-line">
+                    <span>Hra</span>
+                    <strong th:text="${@reversiController.gameState}">PLAYING</strong>
+                </div>
 
-<a href="/comment"> Services</a>
+                <div class="status-line">
+                    <span>Na ťahu</span>
+                    <strong th:text="${@reversiController.playerState}">BLACK</strong>
+                </div>
+
+                <span th:text="${@reversiController.message}" class="message"></span>
+            </div>
+
+            <div class="panel-card score-card">
+                <h2>Skóre</h2>
+
+                <div class="score-grid">
+                    <div class="score-box black-score">
+                        <span>Čierny</span>
+                        <strong th:text="${@reversiController.scoreBlack}">0</strong>
+                    </div>
+
+                    <div class="score-box white-score">
+                        <span>Biely</span>
+                        <strong th:text="${@reversiController.scoreWhite}">0</strong>
+                    </div>
+                </div>
+            </div>
+        </aside>
+
+        <section class="board-card">
+            <div class="board-header">
+                <h2>Hracia plocha</h2>
+                <p>Klikni na označené políčko a polož svoj kameň.</p>
+            </div>
+
+            <div class="board-wrapper" th:utext="${@reversiController.htmlField}">
+                Hracia plocha
+            </div>
+        </section>
+
+    </section>
+
+    <section class="scores-section">
+        <div class="section-heading">
+            <p class="eyebrow">Leaderboard</p>
+            <h2>Najlepšie skóre</h2>
+        </div>
+
+        <ol class="score-list">
+            <li th:each="score : ${scores}">
+                <span th:text="${score.player}">Player</span>
+                <strong th:text="${score.points}">0</strong>
+            </li>
+        </ol>
+    </section>
+
+</main>
 
 </body>
 </html>

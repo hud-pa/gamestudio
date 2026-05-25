@@ -1,187 +1,153 @@
-<!doctype html>
-<html lang="sk">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="generator" content="Jekyll v4.0.1">
-    <title>Domovská stránka</title>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="sk">
+<head>
+  <title>Gamestudio</title>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
+  <link rel="stylesheet" href="/css/homepage.css"/>
+</head>
+<body class="homepage">
 
-    <!-- Bootstrap core CSS -->
-<link href="../assets/dist/css/bootstrap.css" rel="stylesheet">
+<header class="top-bar">
+  <a href="/" class="brand">Gamestudio</a>
 
-    <style>
-      .bd-placeholder-img {
-        font-size: 1.125rem;
-        text-anchor: middle;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-      }
+  <div class="top-actions">
+    <nav class="navigation">
+      <a href="/" class="active">Domov</a>
+      <a href="/reversi">Reversi</a>
+      <a href="/comment">Hodnotenia</a>
+    </nav>
 
-      @media (min-width: 768px) {
-        .bd-placeholder-img-lg {
-          font-size: 3.5rem;
-        }
-      }
-    </style>
-    <!-- Custom styles for this template -->
-    <link href="../assets/dist/css/homepage.css" rel="stylesheet">
-  </head>
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-
-
-  <div class="collapse navbar-collapse" id="navbar">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="homepage.html">Domov <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="mydata.html">Moje dáta</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="aos.html">AOS</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="compare.html">Porovnanie dát</a>
-      </li>
-    </ul>
-
-    <a href="logout.html" class="btn btn-info" role="button">Odhlásit</a>
-  </div>
-</nav>
-
-<main role="main">
-
-  <!-- Main jumbotron for a primary marketing message or call to action -->
-  <div class="jumbotron">
-    <div class="container">
-      <h1 class="display-3">Hello, world!</h1>
-      <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-      <p><a class="btn btn-primary btn-lg" href="#" role="button">Learn more &raquo;</a></p>
+    <div class="user-status" th:if="${@userController.logged}">
+      <span>
+        Prihlásený:
+        <strong th:text="${@userController.loggedUser}">hráč</strong>
+      </span>
+      <a href="/user/logout" class="nav-logout-button">Odhlásiť sa</a>
     </div>
   </div>
+</header>
 
-  <div class="container">
-    <!-- Example row of columns -->
-    <div class="row">
-      <div class="col-md-4">
-        <h2>Upozornenia</h2>
-        <div class="alert alert-success">
-          <strong>Success!</strong> Indicates a successful or positive action.
-        </div>
+<main class="home-layout">
 
-        <div class="alert alert-info alert-dismissible">
-          <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-          <strong>Info!</strong> Indicates a neutral informative change or action.
-        </div>
+  <section class="hero-card">
+    <div class="hero-content">
+      <p class="eyebrow">Vitaj v hernom štúdiu</p>
+      <h1>Hraj, skóruj a porovnávaj výsledky</h1>
+      <p class="hero-text">
+        Gamestudio je miesto, kde si môžeš zahrať hry, sledovať najlepšie skóre,
+        pridávať komentáre a hodnotiť svoje obľúbené hry.
+      </p>
 
-        <div class="alert alert-warning">
-          <strong>Warning!</strong> Indicates a warning that might need attention.
-        </div>
-
-        <div class="alert alert-danger">
-          <strong>Danger!</strong> Indicates a dangerous or potentially negative action.
-        </div>
-        <p><a class="btn btn-secondary" href="#" role="button">View details &raquo;</a></p>
-      </div>
-      <div class="col-md-4">
-
-      </div>
-      <div class="col-md-4">
-        <h2>Novinky</h2>
-
-
-        <div class="container">
-          <div class="row">
-            <div class="col-md-12">
-              <div id="news-slider" class="owl-carousel">
-                <div class="post-slide">
-                  <div class="post-img">
-                    <img src="/images/example.png" alt="">
-                    <a href="#" class="over-layer"><i class="fa fa-link"></i></a>
-                  </div>
-                  <div class="post-content">
-                    <h3 class="post-title">
-                      <a href="#">Lorem ipsum dolor sit amet.</a>
-                    </h3>
-                    <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-                    <span class="post-date"><i class="fa fa-clock-o"></i>Feb 7, 2016</span>
-                    <a href="" class="read-more">read more</a>
-                  </div>
-                </div>
-
-                <div class="post-slide">
-                  <div class="post-img">
-                    <img src="/images/example.png" alt="">
-                    <a href="#" class="over-layer"><i class="fa fa-link"></i></a>
-                  </div>
-                  <div class="post-content">
-                    <h3 class="post-title">
-                      <a href="#">Lorem ipsum dolor sit amet.</a>
-                    </h3>
-                    <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-                    <span class="post-date"><i class="fa fa-clock-o"></i>Feb 9, 2016</span>
-                    <a href="" class="read-more">read more</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+      <div class="hero-actions">
+        <a href="/reversi" class="primary-button">Hrať Reversi</a>
+        <a href="/comment" class="secondary-button">Pozrieť hodnotenia</a>
       </div>
     </div>
 
-    <hr>
+    <div class="hero-side">
+      <div class="login-card" th:if="${not @userController.logged}">
+        <p class="eyebrow">Účet</p>
+        <h2>Prihlásenie</h2>
+        <p class="login-text">
+          Zadaj meno hráča, pod ktorým sa uloží tvoje skóre a komentáre.
+        </p>
 
-  </div> <!-- /container -->
+        <form class="login-form" method="get" th:action="@{/user/login}">
+          <label for="login">Meno hráča</label>
+          <input id="login" type="text" name="login" placeholder="napr. Palo" required/>
+          <button type="submit" class="login-button">Prihlásiť sa</button>
+        </form>
+      </div>
 
-  <div class="container">
-    <div class="row">
-      <div class="col-md-12">
-        <div id="news-slider" class="owl-carousel">
-          <div class="post-slide">
-            <div class="post-img">
-              <img src="/images/example.png" alt="">
-              <a href="#" class="over-layer"><i class="fa fa-link"></i></a>
-            </div>
-            <div class="post-content">
-              <h3 class="post-title">
-                <a href="#">Lorem ipsum dolor sit amet.</a>
-              </h3>
-              <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-              <span class="post-date"><i class="fa fa-clock-o"></i>Feb 7, 2016</span>
-              <a href="" class="read-more">read more</a>
-            </div>
-          </div>
+      <div class="login-card logged-card" th:if="${@userController.logged}">
+        <p class="eyebrow">Účet</p>
+        <h2>Si prihlásený</h2>
+        <p class="login-text">
+          Vitaj späť,
+          <strong th:text="${@userController.loggedUser}">hráč</strong>.
+        </p>
 
-          <div class="post-slide">
-            <div class="post-img">
-              <img src="/images/example.png" alt="">
-              <a href="#" class="over-layer"><i class="fa fa-link"></i></a>
-            </div>
-            <div class="post-content">
-              <h3 class="post-title">
-                <a href="#">Lorem ipsum dolor sit amet.</a>
-              </h3>
-              <p class="post-description">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aperiam consectetur cumque dolorum, ex incidunt ipsa laudantium necessitatibus neque quae tempora......</p>
-              <span class="post-date"><i class="fa fa-clock-o"></i>Feb 9, 2016</span>
-              <a href="" class="read-more">read more</a>
-            </div>
-          </div>
+        <a href="/user/logout" class="logout-button">Odhlásiť sa</a>
+      </div>
+
+      <div class="hero-visual">
+        <div class="game-chip dark-chip"></div>
+        <div class="game-chip light-chip"></div>
+        <div class="board-preview">
+          <span></span><span></span><span></span><span></span>
+          <span></span><span class="black"></span><span class="white"></span><span></span>
+          <span></span><span class="white"></span><span class="black"></span><span></span>
+          <span></span><span></span><span></span><span></span>
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section class="cards-grid">
+
+    <article class="feature-card">
+      <div class="card-icon">🎮</div>
+      <h2>Hry</h2>
+      <p>
+        Spusti si dostupné hry priamo v prehliadači a pokračuj v hraní cez jednoduché webové UI.
+      </p>
+      <a href="/reversi" class="card-link">Otvoriť Reversi</a>
+    </article>
+
+    <article class="feature-card">
+      <div class="card-icon">🏆</div>
+      <h2>Skóre</h2>
+      <p>
+        Sleduj najlepšie výsledky hráčov a pokús sa dostať na vrchol leaderboardu.
+      </p>
+      <a href="/comment" class="card-link">Zobraziť skóre</a>
+    </article>
+
+    <article class="feature-card">
+      <div class="card-icon">⭐</div>
+      <h2>Hodnotenia</h2>
+      <p>
+        Ohodnoť hru, pridaj komentár a pozri si názory ostatných hráčov.
+      </p>
+      <a href="/comment" class="card-link">Prejsť na služby</a>
+    </article>
+
+  </section>
+
+  <section class="info-section">
+    <div class="section-heading">
+      <p class="eyebrow">Aktuálne</p>
+      <h2>Čo môžeš robiť?</h2>
+    </div>
+
+    <div class="info-grid">
+      <div class="info-card">
+        <span class="info-number">01</span>
+        <h3>Spusti novú hru</h3>
+        <p>Začni hrať Reversi a pokús sa poraziť súpera čo najvyšším skóre.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="info-number">02</span>
+        <h3>Získaj body</h3>
+        <p>Po skončení hry sa tvoje skóre uloží medzi najlepšie výsledky.</p>
+      </div>
+
+      <div class="info-card">
+        <span class="info-number">03</span>
+        <h3>Pridaj spätnú väzbu</h3>
+        <p>Napíš komentár alebo pridaj hodnotenie hry cez stránku služieb.</p>
+      </div>
+    </div>
+  </section>
 
 </main>
 
-<footer class="container">
+<footer class="footer">
+  <p>Gamestudio © 2026</p>
 </footer>
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
-      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.js"></script></body>
+
+</body>
 </html>

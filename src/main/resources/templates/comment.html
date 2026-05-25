@@ -1,197 +1,211 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org" class="comment">
+<html xmlns:th="http://www.thymeleaf.org" lang="sk">
 <head>
-    <title>LEVEL SELECT</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="../static/css/MyCss.css.css" th:href="@{/css/MyCss.css}"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <title>Reversi komunita</title>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 
-    <link rel="stylesheet" type="text/css"
-          href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css"/>
-
-    <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-
+    <link rel="stylesheet" href="/css/comment.css"/>
 </head>
-<body>
+<body class="comment-page">
 
-<div class="first">
-    <p class="tablelabel">Hall of Fame</p>
-    <table class="info tableOne">
-        <thead>
-        <tr>
-            <th>Player</th>
-            <th>Points</th>
-            <th>Played on</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="score: ${scores}">
-            <td th:text="${score.player}"></td>
-            <td th:text="${score.points}"></td>
-            <td class="time" th:text="${score.playedOn}"></td>
-        </tr>
-        </tbody>
-    </table>
+<header class="top-bar">
+    <a href="/" class="brand">Gamestudio</a>
 
+    <div class="top-actions">
+        <nav class="navigation">
+            <a href="/">Domov</a>
+            <a href="/reversi">Reversi</a>
+            <a href="/comment" class="active">Hodnotenia</a>
+        </nav>
 
-<!--<div th:if="${not @userController.logged}">-->
-
-        <div class="size">
-            <span class="loggedinfo">My rating:</span>
-            <th:block th:switch="${myRating}">
-                <div th:case="'1'">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div th:case="'2'">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div th:case="'3'">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star"></span>
-                    <span class="fa fa-star"></span>
-                </div>
-                <div th:case="'4'">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star "></span>
-                </div>
-                <div th:case="'5'">
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                    <span class="fa fa-star checked"></span>
-                </div>
-                <div th:case="*">
-                    <span class="loggedinfo">No ratings yet</span>
-                </div>
-            </th:block>
+        <div class="user-status" th:if="${@userController.logged}">
+            <span>
+                Prihlásený:
+                <strong th:text="${@userController.loggedUser}">hráč</strong>
+            </span>
+            <a href="/user/logout" class="nav-logout-button">Odhlásiť sa</a>
         </div>
 
-
-
-        <form method="get" class="ratingFormMArgin"  th:action="@{/comment}">
-    <span class="star-rating">
-  <input type="radio" name="rating" value="1"><i></i>
-  <input type="radio" name="rating" value="2"><i></i>
-  <input type="radio" name="rating" value="3"><i></i>
-  <input type="radio" name="rating" value="4"><i></i>
-  <input type="radio" name="rating" value="5"><i></i>
-</span>
-            <button id="submitRtng" class="marginBottomForm rateBtn" type="submit">Rate Game</button> <br>
-        </form>
-   <!-- </div> -->
-</div>
-
-
-<div class="third">
-    <p class="tablelabel">Comments</p>
-
-    <div class="commentWindow">
-        <div th:each="comment: ${comments}">
-
-            <div class="uniqueComment">
-                <div class="commentInfo">
-                    <p class="authorP" th:text="${comment.player}"></p>
-                    <p class="datep timeComment" th:text="${comment.commentedOn}"></p>
-                </div>
-                <p class="commentSpan" th:text="${comment.comment}"></p>
-
-
-            </div>
-            <hr class="underComment"/>
+        <div class="user-status guest-status" th:if="${not @userController.logged}">
+            <span>Nie si prihlásený</span>
+            <a href="/" class="nav-login-button">Prihlásiť sa</a>
         </div>
-
     </div>
+</header>
 
-    <div th:if="${not @userController.logged}">
-        <div class="wrapper">
-            <button type="button" id="postcommentbutton" onclick="document.getElementById('id01').style.display='block'">Post Comment</button>
+<main class="comment-layout">
+
+    <section class="hero-card">
+        <div>
+            <p class="eyebrow">Komunita hry</p>
+            <h1>Hodnotenia a komentáre</h1>
+            <p class="hero-text">
+                Pozri si najlepšie skóre, ohodnoť Reversi a napíš komentár ostatným hráčom.
+            </p>
         </div>
 
-    </div>
+        <a href="/reversi" class="primary-button">Hrať Reversi</a>
+    </section>
 
-</div>
+    <section class="content-grid">
 
-<!-- The Modal -->
-<div id="id01" class="modal">
-  <span id="closeModal" onclick="document.getElementById('id01').style.display='none'"
-        class="close" title="Close Modal">&times;</span>
+        <section class="main-column">
 
-    <!-- Modal Content -->
-    <form id="commentForm" class="modal-content animate commentLabel" method="get" th:action="@{/comment}">
+            <article class="panel-card rating-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Rating</p>
+                        <h2>Ohodnoť hru</h2>
+                    </div>
 
-        <div class="container">
+                    <div class="current-rating">
+                        <span>Moje hodnotenie</span>
+                        <strong th:text="${myRating}">0</strong>
+                        <small>/ 5</small>
+                    </div>
+                </div>
 
-            <div th:if="${not @userController.logged}">
-                <label style="display: none" for="commentAuthor"><b>Author:</b></label>
+                <form method="get" th:action="@{/comment}" class="rating-form">
+                    <div class="rating-stars" aria-label="Rating">
+                        <input type="radio" id="rating-5" name="rating" value="5"/>
+                        <label for="rating-5" title="5 hviezd">★</label>
 
-            </div>
+                        <input type="radio" id="rating-4" name="rating" value="4"/>
+                        <label for="rating-4" title="4 hviezdy">★</label>
 
-            <label for="commenttext" ><b >Text komentára:</b></label>
-            <textarea spellcheck="true" placeholder="Text komentára vložte tu..." name="comment" id="commenttext"  cols="70" rows="9" required></textarea>
-            <button id="submitBtn" class="marginBottomForm" type="submit">Post comment</button> <br>
+                        <input type="radio" id="rating-3" name="rating" value="3"/>
+                        <label for="rating-3" title="3 hviezdy">★</label>
 
-        </div>
+                        <input type="radio" id="rating-2" name="rating" value="2"/>
+                        <label for="rating-2" title="2 hviezdy">★</label>
 
-        <div class="container" style="background-color:#f1f1f1">
-            <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn" id="cnclBtn">Cancel</button>
+                        <input type="radio" id="rating-1" name="rating" value="1"/>
+                        <label for="rating-1" title="1 hviezda">★</label>
+                    </div>
 
-        </div>
-    </form>
-</div>
+                    <button type="submit" class="secondary-button">Uložiť hodnotenie</button>
+                </form>
+            </article>
 
-</div>
+            <article class="panel-card comment-form-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Komentár</p>
+                        <h2>Napíš komentár</h2>
+                    </div>
+                </div>
 
-<script>
-    // Get the modal
-    var modal = document.getElementById('id01');
+                <form method="get" th:action="@{/comment}" class="comment-form">
+                    <label for="comment">Tvoj komentár</label>
+                    <textarea id="comment"
+                              name="comment"
+                              rows="5"
+                              placeholder="Napíš, čo si myslíš o hre Reversi..."
+                              required></textarea>
 
-    // When the user clicks anywhere outside of the modal, close it
-    window.onclick = function(event) {
-        if (event.target == modal) {
-            modal.style.display = "none";
-        }
-    }
-</script>
+                    <button type="submit" class="primary-button form-button">Pridať komentár</button>
+                </form>
+            </article>
 
-<script>
+            <article class="panel-card comments-panel">
+                <div class="panel-heading">
+                    <div>
+                        <p class="eyebrow">Diskusia</p>
+                        <h2>Všetky komentáre</h2>
+                    </div>
 
-    setTime();
+                    <span class="comments-count">
+                        <span th:text="${#lists.size(comments)}">0</span>
+                        komentárov
+                    </span>
+                </div>
 
-    function setTime() {
-        var times =  document.getElementsByClassName("time");
+                <div class="empty-state" th:if="${#lists.isEmpty(comments)}">
+                    Zatiaľ tu nie sú žiadne komentáre. Buď prvý, kto niečo napíše.
+                </div>
 
-        for(var i=0, length =times.length;i<length;i++){
-            console.log(times.item(i));
-            var parts = times.item(i).innerHTML.split(' ');
-            //  console.log(parts[0]);
-            times.item(i).innerHTML=parts[0];
+                <div class="comments-list" th:if="${not #lists.isEmpty(comments)}">
+                    <div class="comment-item" th:each="comment : ${comments}">
+                        <div class="comment-avatar"
+                             th:text="${#strings.substring(comment.player, 0, 1)}">P</div>
 
-        }
+                        <div class="comment-content">
+                            <div class="comment-meta">
+                                <strong th:text="${comment.player}">Player</strong>
+                                <span th:text="${#dates.format(comment.commentedOn, 'dd.MM.yyyy HH:mm')}">
+                                    01.01.2026 12:00
+                                </span>
+                            </div>
 
-        var times =  document.getElementsByClassName("timeComment");
-        for(var i=0, length =times.length;i<length;i++){
-            //  console.log(times.item(i));
-            var parts = times.item(i).innerHTML.split(':');
-            //  console.log(parts[0]);
-            times.item(i).innerHTML=parts[0]+":"+parts[1];
+                            <p th:text="${comment.comment}">
+                                Text komentára
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </article>
 
-        }
-    }
-</script>
+        </section>
+
+        <aside class="side-column">
+
+            <article class="panel-card account-card">
+                <p class="eyebrow">Účet</p>
+
+                <div th:if="${@userController.logged}">
+                    <h2>Si prihlásený</h2>
+                    <p>
+                        Komentuješ a hodnotíš ako
+                        <strong th:text="${@userController.loggedUser}">hráč</strong>.
+                    </p>
+                    <a href="/user/logout" class="logout-button">Odhlásiť sa</a>
+                </div>
+
+                <div th:if="${not @userController.logged}">
+                    <h2>Anonymný režim</h2>
+                    <p>
+                        Nie si prihlásený. Komentáre a hodnotenia sa uložia ako
+                        <strong>anonymous</strong>.
+                    </p>
+                    <a href="/" class="secondary-button full-button">Prihlásiť sa</a>
+                </div>
+            </article>
+
+            <article class="panel-card leaderboard-card">
+                <div class="panel-heading compact-heading">
+                    <div>
+                        <p class="eyebrow">Leaderboard</p>
+                        <h2>Najlepšie skóre</h2>
+                    </div>
+                </div>
+
+                <ol class="score-list">
+                    <li th:each="score : ${scores}">
+                        <div>
+                            <span th:text="${score.player}">Player</span>
+                            <small th:text="${#dates.format(score.playedOn, 'dd.MM.yyyy')}">
+                                01.01.2026
+                            </small>
+                        </div>
+                        <strong th:text="${score.points}">0</strong>
+                    </li>
+                </ol>
+
+                <div class="empty-state small-empty" th:if="${#lists.isEmpty(scores)}">
+                    Zatiaľ nie sú uložené žiadne skóre.
+                </div>
+            </article>
+
+        </aside>
+
+    </section>
+
+</main>
+
+<footer class="footer">
+    <p>Gamestudio © 2026</p>
+</footer>
+
 </body>
 </html>

@@ -73,8 +73,8 @@ public class ReversiController {
                     field.putDisk(Integer.parseInt(row), Integer.parseInt(column));
                     field.changePlayer();
                     field.markFields();
-                    scoreBlack = "Score of BLACK player is : " + field.getBlackDisksCount();//////////////
-                    scoreWhite = "Score of WHITE player is : "+ field.getWhiteDisksCount();
+                    scoreBlack = String.valueOf(field.getBlackDisksCount());
+                    scoreWhite = String.valueOf(field.getWhiteDisksCount());
 
                     if(field.getState() != GameState.PLAYING && !scoreSaved) {
                         String player = userController.isLogged()
@@ -175,8 +175,8 @@ public class ReversiController {
             field = new Field();
             scoreSaved = false;
             message = null;
-            scoreBlack = null;
-            scoreWhite = null;
+            scoreBlack = String.valueOf(field.getBlackDisksCount());
+            scoreWhite = String.valueOf(field.getWhiteDisksCount());
         }
 
     }
