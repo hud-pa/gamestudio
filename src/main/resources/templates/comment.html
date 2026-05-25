@@ -56,18 +56,58 @@
                 <div class="panel-heading">
                     <div>
                         <p class="eyebrow">Rating</p>
-                        <h2>Ohodnoť hru</h2>
+                        <h2>Hodnotenie hry</h2>
                     </div>
 
-                    <div class="current-rating">
-                        <span>Moje hodnotenie</span>
-                        <strong th:text="${myRating}">0</strong>
-                        <small>/ 5</small>
+                    <div class="rating-summary">
+                        <div class="current-rating average-rating">
+                            <span>Hodnotenie hry</span>
+                            <strong th:text="${averageRating}">0</strong>
+                            <small>/ 5</small>
+                        </div>
+
+                        <div class="current-rating">
+                            <span>Moje hodnotenie</span>
+                            <strong th:text="${myRating}">0</strong>
+                            <small>/ 5</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="rating-overview">
+                    <div class="rating-display overall-rating">
+                        <span class="rating-label">Celkové hodnotenie hry</span>
+
+                        <div class="rating-value">
+                            <strong th:text="${averageRating}">0</strong>
+                            <small>/ 5</small>
+                        </div>
+
+                        <div class="display-stars" aria-label="Celkové hodnotenie hry">
+                            <span th:classappend="${averageRating >= 1} ? ' active' : ''">★</span>
+                            <span th:classappend="${averageRating >= 2} ? ' active' : ''">★</span>
+                            <span th:classappend="${averageRating >= 3} ? ' active' : ''">★</span>
+                            <span th:classappend="${averageRating >= 4} ? ' active' : ''">★</span>
+                            <span th:classappend="${averageRating >= 5} ? ' active' : ''">★</span>
+                        </div>
+                    </div>
+
+                    <div class="rating-display user-rating">
+                        <span class="rating-label">Tvoje aktuálne hodnotenie</span>
+
+                        <div class="rating-value">
+                            <strong th:text="${myRating}">0</strong>
+                            <small>/ 5</small>
+                        </div>
+
+                        <p class="rating-help">
+                            Vyber počet hviezdičiek a ulož svoje hodnotenie.
+                        </p>
                     </div>
                 </div>
 
                 <form method="get" th:action="@{/comment}" class="rating-form">
-                    <div class="rating-stars" aria-label="Rating">
+                    <div class="rating-stars" aria-label="Tvoje hodnotenie">
                         <input type="radio" id="rating-5" name="rating" value="5"/>
                         <label for="rating-5" title="5 hviezd">★</label>
 

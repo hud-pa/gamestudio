@@ -62,6 +62,12 @@ public class CommentController {
             model.addAttribute("myRating", 0);
         }
 
+        try {
+            model.addAttribute("averageRating", ratingService.getAverageRating(GAME_NAME));
+        } catch (Exception e) {
+            model.addAttribute("averageRating", 0);
+        }
+
         return "comment";
     }
 }

@@ -337,31 +337,122 @@ body.comment-page {
    Rating
    ========================= */
 
-.current-rating {
-    min-width: 110px;
-    padding: 14px 16px;
-    border-radius: 18px;
-    background: var(--yellow-soft);
-    border: 1px solid rgba(250, 204, 21, 0.28);
-    text-align: center;
+.rating-overview {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: 16px;
+    margin-bottom: 24px;
 }
 
-.current-rating span {
+.rating-display {
+    padding: 22px;
+    border-radius: 22px;
+    background: var(--bg-card-light);
+    border: 1px solid var(--border);
+}
+
+.overall-rating {
+    background:
+        linear-gradient(135deg, rgba(34, 197, 94, 0.20), rgba(30, 41, 59, 0.92));
+    border-color: rgba(34, 197, 94, 0.30);
+}
+
+.user-rating {
+    background:
+        linear-gradient(135deg, rgba(250, 204, 21, 0.14), rgba(30, 41, 59, 0.92));
+    border-color: rgba(250, 204, 21, 0.25);
+}
+
+.rating-label {
     display: block;
     color: var(--text-muted);
-    font-size: 0.78rem;
-    margin-bottom: 4px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 12px;
 }
 
-.current-rating strong {
+.rating-value {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-bottom: 12px;
+}
+
+.rating-value strong {
+    color: var(--primary);
+    font-size: 3rem;
+    line-height: 1;
+}
+
+.user-rating .rating-value strong {
     color: var(--yellow);
+}
+
+.rating-value small {
+    color: var(--text-muted);
+    font-weight: 800;
+}
+
+.display-stars {
+    display: flex;
+    gap: 6px;
     font-size: 2rem;
     line-height: 1;
 }
 
-.current-rating small {
-    color: var(--text-muted);
+.display-stars span {
+    color: rgba(148, 163, 184, 0.35);
 }
+
+.display-stars span.active {
+    color: var(--yellow);
+    text-shadow: 0 0 18px rgba(250, 204, 21, 0.25);
+}
+
+.rating-help {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.55;
+}
+
+.rating-form {
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+}
+
+.rating-stars {
+    display: inline-flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+    gap: 6px;
+}
+
+.rating-stars input {
+    display: none;
+}
+
+.rating-stars label {
+    font-size: 2.4rem;
+    line-height: 1;
+    color: rgba(148, 163, 184, 0.45);
+    cursor: pointer;
+    transition: 0.16s ease;
+}
+
+.rating-stars label:hover,
+.rating-stars label:hover ~ label,
+.rating-stars input:checked ~ label {
+    color: var(--yellow);
+    transform: translateY(-2px);
+}
+
 
 .rating-form {
     display: flex;
@@ -633,6 +724,10 @@ body.comment-page {
     .panel-card {
         padding: 20px;
         border-radius: 22px;
+    }
+
+    .rating-overview {
+        grid-template-columns: 1fr;
     }
 
     .hero-card h1 {
